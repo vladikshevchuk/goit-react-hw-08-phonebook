@@ -1,16 +1,15 @@
-import ContactsList from './Contacts/Contacts';
-import { FindNumberByName } from './Find/FindNumberByName';
-import { Form } from './Form/Form';
+import { Routes, Route } from "react-router-dom";
+// import { Home } from "pages/Home";
 
 export const App = () => {
   
   return (
     <div>
-      <h1>Phonebook</h1>
-      <Form />
-      <h2>Contacts</h2>
-      <FindNumberByName />
-      <ContactsList />
+      <Routes>
+        <Route path="/" element={<div>Home</div>} />
+        {/* <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} /> */}
+      </Routes>
     </div>
   );
 };
