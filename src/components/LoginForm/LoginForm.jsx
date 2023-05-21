@@ -1,34 +1,59 @@
-import { useDispatch } from "react-redux";
-import { logIn } from "redux/auth/operations";
-import { Input, Button } from '@chakra-ui/react'
-import { Form, Lable } from "./LoginForm.styled";
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/auth/operations';
+import { Input, Button, FormControl, FormLabel } from '@chakra-ui/react';
+import { Field, Form, Formik } from 'formik';
+
+const initialValues = {
+  email: '',
+  password: '',
+};
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const form = e.currentTarget;
+  const handleSubmit = (values, actions) => {
+    const { email, password } = values;
+
     dispatch(
       logIn({
-        email: form.elements.email.value,
-        password: form.elements.password.value,
+        email,
+        password,
       })
     );
-    form.reset();
+
+    actions.resetForm();
   };
 
   return (
-    <Form autoComplete="off" onClick={handleSubmit}>
-      <Lable>
-        Email
-        <Input type="email" name="email" />
-      </Lable>
-      <Lable>
-        Password
-        <Input type="password" name="password" />
-      </Lable>
-      <Button type="submit" colorScheme='blue'>Log In</Button>
-    </Form>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      {props => (
+        <Form>
+          <Field name="email">
+            {({ field }) => (
+              <FormControl mt={4}>
+                <FormLabel>Email</FormLabel>
+                <Input {...field} type="email" name="email" />
+              </FormControl>
+            )}
+          </Field>
+          <Field name="password">
+            {({ field }) => (
+              <FormControl mt={4}>
+                <FormLabel>Password</FormLabel>
+                <Input {...field} type="password" name="password" />
+              </FormControl>
+            )}
+          </Field>
+          <Button
+            mt={4}
+            colorScheme="blue"
+            isLoading={props.isSubmitting}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };

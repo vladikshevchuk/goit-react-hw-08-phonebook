@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/operations';
 import { useDisclosure } from '@chakra-ui/react';
 import { ModalWindow } from 'components/ModalWindow/ModalWindow';
-import { Button } from './ContactEditor.styled';
+import { Button } from '@chakra-ui/react';
 
 export const ContactEditor = () => {
   const dispatch = useDispatch();
@@ -18,14 +18,10 @@ export const ContactEditor = () => {
 
   return (
     <>
-      <Button type="button" onClick={onOpen}>
+      <Button type="button" onClick={onOpen} colorScheme="blue">
         Add contact
       </Button>
-      <ModalWindow
-        isOpen={isOpen}
-        onClose={onClose}
-        getContact={getContact}
-      />
+      <ModalWindow isOpen={isOpen} onClose={onClose} getContact={getContact} />
     </>
   );
 };
