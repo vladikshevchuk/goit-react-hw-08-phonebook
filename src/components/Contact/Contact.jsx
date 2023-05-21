@@ -9,7 +9,7 @@ export const Contact = ({ contact }) => {
   const handleDelete = () => dispatch(deleteContact(contact.id));
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const getContact = (e, editedContact) => {
+  const getContact = (e, editedContact) => {
     e.preventDefault();
 
     dispatch(updateContact(contact.id));
@@ -26,7 +26,12 @@ export const Contact = ({ contact }) => {
       <Button type="button" onClick={handleDelete}>
         Delete
       </Button>
-      <ModalWindow isOpen={isOpen} onClose={onClose} getContact={getContact} />
+      <ModalWindow
+        isOpen={isOpen}
+        onClose={onClose}
+        getContact={getContact}
+        contact={contact}
+      />
     </WrapperContact>
   );
 };

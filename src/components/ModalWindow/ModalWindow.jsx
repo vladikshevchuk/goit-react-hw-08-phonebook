@@ -13,9 +13,9 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-export const ModalWindow = ({ isOpen, onClose, getContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
+  const [name, setName] = useState(contact?.name ?? '');
+  const [number, setNumber] = useState(contact?.number ?? '');
 
   const handleInputChange = e => {
     const { name, value } = e.target;
