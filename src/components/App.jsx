@@ -1,22 +1,17 @@
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { useAuth } from 'hooks';
 import { refreshUser } from 'redux/auth/operations';
-import { Home } from 'pages/Home';
-import { Contacts } from 'pages/Contacts';
-import { Register } from 'pages/Register';
-import { Login } from 'pages/Login';
-import { NotFound } from 'pages/NotFound';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
 
-// const HomePage = lazy(() => import('../pages/Home'));
-// const RegisterPage = lazy(() => import('../pages/Register'));
-// const LoginPage = lazy(() => import('../pages/Login'));
-// const ContactsPage = lazy(() => import('../pages/Contacts'));
-// const NotFoundPages = lazy(() => import('../pages/NotFound'));
+const HomePage = lazy(() => import('../pages/Home'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const ContactsPage = lazy(() => import('../pages/Contacts'));
+const NotFoundPages = lazy(() => import('../pages/NotFound'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -32,26 +27,26 @@ export const App = () => {
     <div>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<HomePage />} />
           <Route
             path="/contacts"
             element={
-              <PrivateRoute redirectTo="/login" component={<Contacts />} />
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
             }
           />
           <Route
             path="/register"
             element={
-              <RestrictedRoute redirectTo="/contacts" component={<Register />} />
+              <RestrictedRoute redirectTo="/contacts" component={<RegisterPage />} />
             }
           />
           <Route
             path="/login"
             element={
-              <RestrictedRoute redirectTo="/contacts" component={<Login />} />
+              <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
             }
           />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPages />} />
         </Route>
       </Routes>
     </div>
