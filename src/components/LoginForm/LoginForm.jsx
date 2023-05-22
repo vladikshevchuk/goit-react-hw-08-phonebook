@@ -2,11 +2,20 @@ import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/operations';
 import { Input, Button, FormControl, FormLabel } from '@chakra-ui/react';
 import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 const initialValues = {
   email: '',
   password: '',
 };
+
+const SignupSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string()
+    .min(5, 'Too Short!')
+    .max(16, 'Too Long!')
+    .required('Required'),
+});
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -25,7 +34,11 @@ export const LoginForm = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={SignupSchema}
+      onSubmit={handleSubmit}
+    >
       {props => (
         <Form>
           <Field name="email">
