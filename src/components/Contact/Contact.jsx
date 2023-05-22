@@ -11,9 +11,9 @@ export const Contact = ({ contact }) => {
 
   const getContact = (e, editedContact) => {
     e.preventDefault();
-    console.log(editedContact);
+    const { name, number } = editedContact;
 
-    dispatch(updateContact(contact.id, editedContact));
+    dispatch(updateContact({id: contact.id, name, number}));
 
     onClose();
   };

@@ -13,7 +13,3 @@ export const Link = styled(NavLink)`
     background-color: orangered;
   }
 `;
-
-export const Nav = styled.nav`
-  display: flex;
-`;

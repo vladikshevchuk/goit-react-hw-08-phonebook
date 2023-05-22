@@ -51,6 +51,7 @@ const contactsSlice = createSlice({
       const { id, name, number } = action.payload;
       console.log(id);
       const existingContact = state.items.find(contact => contact.id === id);
+      console.log(existingContact);
       if (existingContact) {
         existingContact.name = name;
         existingContact.number = number;
