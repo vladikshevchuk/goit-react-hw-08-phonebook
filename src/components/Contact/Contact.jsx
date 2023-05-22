@@ -3,6 +3,7 @@ import { ModalWindow } from 'components/ModalWindow/ModalWindow';
 import { useDispatch } from 'react-redux';
 import { deleteContact, updateContact } from 'redux/contacts/operations';
 import { Box, Text, Button } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 
 export const Contact = ({ contact }) => {
   const dispatch = useDispatch();
@@ -49,4 +50,12 @@ export const Contact = ({ contact }) => {
       />
     </Box>
   );
+};
+
+Contact.propTypes = {
+  contact: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  })
 };

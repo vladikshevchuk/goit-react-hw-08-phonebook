@@ -12,6 +12,7 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 
 export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
   const [name, setName] = useState(contact?.name ?? '');
@@ -39,7 +40,7 @@ export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
 
     const newContact = { name, number };
 
-    getContact( e , newContact);
+    getContact(e, newContact);
 
     resetForm();
   };
@@ -94,4 +95,15 @@ export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
       </ModalContent>
     </Modal>
   );
+};
+
+ModalWindow.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  getContact: PropTypes.func.isRequired,
+  contact: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }),
 };
