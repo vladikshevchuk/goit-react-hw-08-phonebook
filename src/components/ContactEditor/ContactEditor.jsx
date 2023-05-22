@@ -19,7 +19,7 @@ export const ContactEditor = () => {
   return (
     <>
       <Button type="button" onClick={onOpen} colorScheme="blue">
-        Add contact
+        Create contact
       </Button>
       <ModalWindow isOpen={isOpen} onClose={onClose} getContact={getContact} />
     </>
