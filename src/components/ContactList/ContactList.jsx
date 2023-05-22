@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux';
 import { selectAllContacts} from 'redux/contacts/selectors';
-import { Contact } from 'components/Contact/Contact';
 import { List, ListItem } from '@chakra-ui/react';
+import { Contact } from 'components/Contact/Contact';
 import { FindNumberByName } from 'components/Find/FindNumberByName';
+import { selectFilterQuery } from 'redux/filter/selectors';
 
 export const ContactList = () => {
   const contacts = useSelector(selectAllContacts);
-  const state = useSelector(state => state.filter);
+  const state = useSelector(selectFilterQuery);
 
   const getVisibleContacts = () => {
     const normalizedFilter = state.filter.toLowerCase();
@@ -26,7 +27,7 @@ export const ContactList = () => {
             <Contact contact={contact} />
           </ListItem>
         ))}
-      </List>}
+        </List>}
     </>
   );
 };

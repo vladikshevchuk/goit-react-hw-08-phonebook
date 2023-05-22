@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { filterContact } from 'redux/filterSlice';
+import { filterContact } from 'redux/filter/slice';
 
 export const FindNumberByName = () => {
   const dispatch = useDispatch();

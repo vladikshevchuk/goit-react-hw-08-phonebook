@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 // GET @ /contacts
 export const fetchContacts = createAsyncThunk(
@@ -9,6 +10,7 @@ export const fetchContacts = createAsyncThunk(
       const res = await axios.get('/contacts');
       return res.data;
     } catch (error) {
+      toast.error('Oops! Something went wrong.');
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -20,8 +22,10 @@ export const addContact = createAsyncThunk(
   async (newContact, thunkAPI) => {
     try {
       const response = await axios.post('/contacts', newContact);
+      toast.success('Successfully created!');
       return response.data;
     } catch (e) {
+      toast.error('Oops! Something went wrong.');
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -33,8 +37,10 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const response = await axios.delete(`/contacts/${contactId}`);
+      toast.success('Successfully deleted!');
       return response.data;
     } catch (e) {
+      toast.error('Oops! Something went wrong.');
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -47,8 +53,10 @@ export const updateContact = createAsyncThunk(
     const { id, name, number } = contact;
     try {
       const response = await axios.patch(`/contacts/${id}`, { name, number });
+      toast.success('Successfully modified!');
       return response.data;
     } catch (e) {
+      toast.error('Oops! Something went wrong.');
       return thunkAPI.rejectWithValue(e.message);
     }
   }
