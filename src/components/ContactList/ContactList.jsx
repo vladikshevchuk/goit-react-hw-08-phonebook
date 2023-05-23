@@ -19,19 +19,26 @@ export const ContactList = () => {
 
   return (
     <>
-      <FindNumberByName />
       {contacts.length === 0 ? (
         <Text fontSize="5xl" textAlign="center" mt="30px">
           Create a contact
         </Text>
       ) : (
-        <List mt="16px" display="grid" gridTemplateColumns="1fr" gridGap="12px">
-          {getVisibleContacts().map(contact => (
-            <ListItem key={contact.id}>
-              <Contact contact={contact} />
-            </ListItem>
-          ))}
-        </List>
+        <>
+          <FindNumberByName />
+          <List
+            mt="16px"
+            display="grid"
+            gridTemplateColumns="1fr"
+            gridGap="12px"
+          >
+            {getVisibleContacts().map(contact => (
+              <ListItem key={contact.id}>
+                <Contact contact={contact} />
+              </ListItem>
+            ))}
+          </List>
+        </>
       )}
     </>
   );
