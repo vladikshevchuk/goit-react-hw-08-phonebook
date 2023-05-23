@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -11,29 +11,61 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
-export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
+export const ModalWindow = ({
+  isOpen,
+  onClose,
+  getContact,
+  contact,
+  boolean,
+}) => {
   const [name, setName] = useState(contact?.name ?? '');
   const [number, setNumber] = useState(contact?.number ?? '');
+  const [errorName, setErrorName] = useState('');
+  const [errorNumber, setErrorNumber] = useState('');
+  const [validName, setValidName] = useState(boolean);
+  const [validNumber, setValidNumber] = useState(boolean);
+  const [validForm, setValidForm] = useState(boolean);
 
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-
-      case 'number':
-        setNumber(value);
-        break;
-
-      default:
-        return;
+  const handleInputName = e => {
+    setName(e.target.value);
+    const pattern =
+      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+    if (pattern.test(e.target.value)) {
+      setErrorName('');
+      setValidName(true);
+    } else {
+      setErrorName('Wrong name format!');
+      setValidName(false);
     }
   };
+
+  const handleInputNumber = e => {
+    setNumber(e.target.value);
+    const pattern =
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
+    if (pattern.test(e.target.value)) {
+      setErrorNumber('');
+      setValidNumber(true);
+    } else {
+      setErrorNumber('Wrong phone number format!');
+      setValidNumber(false);
+    }
+  };
+
+  const validationForm = () => {
+    if (validName === true && validNumber === true) {
+      setValidForm(true);
+    }
+    if (validName === false || validNumber === false) {
+      setValidForm(false);
+    }
+  };
+
+  useEffect(() => validationForm())
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -67,8 +99,9 @@ export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
               value={name}
-              onChange={handleInputChange}
+              onChange={handleInputName}
             />
+            <Text color="red">{errorName}</Text>
           </FormControl>
 
           <FormControl mt={4}>
@@ -81,13 +114,19 @@ export const ModalWindow = ({ isOpen, onClose, getContact, contact }) => {
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
               value={number}
-              onChange={handleInputChange}
+              onChange={handleInputNumber}
             />
+            <Text color="red">{errorNumber}</Text>
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+          <Button
+            colorScheme="blue"
+            mr={3}
+            onClick={handleSubmit}
+            isDisabled={!validForm}
+          >
             Save
           </Button>
           <Button onClick={onClose}>Cancel</Button>
@@ -106,4 +145,5 @@ ModalWindow.propTypes = {
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
   }),
+  boolean: PropTypes.bool.isRequired,
 };

@@ -47,6 +47,7 @@ export const Contact = ({ contact }) => {
         onClose={onClose}
         getContact={getContact}
         contact={contact}
+        boolean={true}
       />
     </Box>
   );
